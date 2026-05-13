@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Adam Hajchaib — Électromécanique</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Outfit:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0d1117;--bg-sb:#090c12;--bg-card:#161b22;--bg-hov:#1c2330;
+  --gold:#c9a84c;--gd:rgba(201,168,76,.13);--gm:rgba(201,168,76,.25);--gb:rgba(201,168,76,.22);
+  --white:#f0ece4;--text:#c5c0b5;--muted:#72706a;--bdr:rgba(255,255,255,.06);--sw:280px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;overflow:hidden}
+body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text)}
+h1,h2,h3,h4{font-family:'Cormorant Garamond',serif}
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:var(--gm);border-radius:2px}
+
+/* SIDEBAR */
+.sb{position:fixed;left:0;top:0;width:var(--sw);height:100vh;background:var(--bg-sb);border-right:1px solid var(--bdr);display:flex;flex-direction:column;z-index:100;transition:transform .3s ease}
+.sb-top{padding:1.8rem 1.5rem 1.4rem;border-bottom:1px solid var(--bdr)}
+.sb-av{width:50px;height:50px;border-radius:50%;border:2px solid var(--gold);display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-weight:600;color:var(--gold);background:var(--gd);margin-bottom:.9rem}
+.sb-name{font-family:'Cormorant Garamond',serif;font-size:1.15rem;font-weight:600;color:var(--white);line-height:1.2;margin-bottom:.25rem}
+.sb-sub{font-size:.7rem;color:var(--muted);letter-spacing:.5px}
+.sb-nav{flex:1;padding:.8rem 0;overflow-y:auto}
+.nb{width:100%;display:flex;align-items:center;gap:.75rem;padding:.68rem 1.4rem;background:transparent;border:none;border-left:3px solid transparent;color:var(--text);font-family:'Outfit',sans-serif;font-size:.86rem;font-weight:400;cursor:pointer;text-align:left;transition:all .2s ease}
+.nb:hover{background:var(--gd);color:var(--white)}
+.nb.on{background:var(--gd);border-left-color:var(--gold);color:var(--white);font-weight:500}
+.ni{font-size:.95rem;min-width:18px}
+.sb-bot{padding:1.1rem 1.4rem;border-top:1px solid var(--bdr)}
+.cv-btn{display:block;width:100%;padding:.65rem 1rem;border:1px solid var(--gb);background:transparent;color:var(--gold);font-family:'Outfit',sans-serif;font-size:.8rem;font-weight:500;text-align:center;text-decoration:none;border-radius:4px;transition:all .25s;letter-spacing:.5px}
+.cv-btn:hover{background:var(--gd);border-color:var(--gold)}
+
+/* CONTENT */
+.ct{margin-left:var(--sw);height:100vh;overflow-y:auto}
+
+/* PAGES */
+.pg{display:none;min-height:100vh;padding:3rem 3.5rem}
+.pg.on{display:block;animation:fs .32s ease forwards}
+#home.on{display:flex;flex-direction:column;height:100vh;padding:3rem 3.5rem}
+@keyframes fs{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+
+/* SHARED */
+.pt{font-family:'Cormorant Garamond',serif;font-size:2.3rem;font-weight:500;color:var(--white);line-height:1.1;margin-bottom:.4rem}
+.pd{width:38px;height:2px;background:var(--gold);margin:.5rem 0 2.5rem;border-radius:1px}
+
+/* HOME */
+.hcenter{flex:1;display:flex;flex-direction:column;justify-content:center}
+.hmain{display:flex;align-items:flex-start;gap:3rem}
+.hleft{flex:1}
+.badge{display:inline-flex;align-items:center;gap:.4rem;border:1px solid var(--gb);background:var(--gd);color:var(--gold);font-size:.72rem;letter-spacing:2px;text-transform:uppercase;padding:.32rem .9rem;border-radius:50px;margin-bottom:1.4rem}
+.hname{font-family:'Cormorant Garamond',serif;font-size:clamp(3rem,6.5vw,5.5rem);font-weight:700;line-height:.95;color:var(--white);margin-bottom:.75rem}
+.hname span{color:var(--gold)}
+.htitle{font-size:.78rem;letter-spacing:4px;text-transform:uppercase;color:var(--gold);margin-bottom:1.4rem}
+.htxt{font-size:.97rem;font-weight:300;line-height:1.78;color:var(--text);max-width:460px;margin-bottom:1.8rem}
+.hbtns{display:flex;gap:.9rem;flex-wrap:wrap}
+.bs{display:inline-block;padding:.68rem 1.7rem;background:var(--gold);color:#0d1117;font-family:'Outfit',sans-serif;font-size:.83rem;font-weight:600;border:none;border-radius:3px;cursor:pointer;letter-spacing:.5px;transition:all .25s;text-decoration:none}
+.bs:hover{background:#d4b55a}
+.bo{display:inline-block;padding:.68rem 1.7rem;background:transparent;color:var(--gold);font-family:'Outfit',sans-serif;font-size:.83rem;font-weight:500;border:1px solid var(--gb);border-radius:3px;cursor:pointer;letter-spacing:.5px;transition:all .25s;text-decoration:none}
+.bo:hover{background:var(--gd);border-color:var(--gold)}
+.hright{display:flex;flex-direction:column;gap:.75rem;min-width:150px;padding-top:.5rem}
+.sc{background:var(--bg-card);border:1px solid var(--bdr);border-left:3px solid var(--gold);border-radius:6px;padding:.9rem 1.2rem;text-align:right}
+.sn{font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:600;color:var(--gold);line-height:1}
+.sl{font-size:.68rem;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin-top:.25rem}
+.hband{display:flex;gap:1.5rem;flex-wrap:wrap;padding:1rem 1.3rem;background:var(--bg-card);border:1px solid var(--bdr);border-radius:6px;margin-top:2rem;font-size:.8rem;color:var(--muted)}
+.hband span{display:flex;align-items:center;gap:.35rem}
+
+/* ABOUT */
+.ag{display:grid;grid-template-columns:1fr 1.45fr;gap:2.5rem}
+.card{background:var(--bg-card);border:1px solid var(--bdr);border-radius:8px;padding:1.4rem}
+.ir{display:flex;align-items:flex-start;gap:.75rem;padding:.75rem 0;border-bottom:1px solid var(--bdr)}
+.ir:last-child{border-bottom:none}
+.ii{font-size:.9rem;min-width:20px;color:var(--gold)}
+.il{font-size:.65rem;text-transform:uppercase;letter-spacing:1.5px;color:var(--muted);display:block;margin-bottom:2px}
+.iv{font-size:.88rem;color:var(--white)}
+.ltit{font-family:'Cormorant Garamond',serif;font-size:1.05rem;color:var(--gold);margin:1.8rem 0 1.1rem}
+.li{margin-bottom:1rem}
+.lt{display:flex;justify-content:space-between;margin-bottom:.45rem}
+.ln{font-size:.86rem;font-weight:500;color:var(--white)}
+.lp{font-size:.73rem;color:var(--gold)}
+.lb{height:3px;background:rgba(255,255,255,.06);border-radius:2px;overflow:hidden}
+.lf{height:100%;width:0;background:var(--gold);border-radius:2px;transition:width 1.2s cubic-bezier(.4,0,.2,1)}
+.atc p{font-size:.94rem;font-weight:300;line-height:1.85;margin-bottom:1.1rem}
+.atc p:first-child{font-size:1.05rem;font-weight:400;color:var(--white)}
+
+/* SKILLS */
+.sg{display:grid;grid-template-columns:repeat(3,1fr);gap:1.1rem}
+.skc{background:var(--bg-card);border:1px solid var(--bdr);border-radius:8px;padding:1.4rem 1rem;text-align:center;transition:all .25s;cursor:default}
+.skc:hover{border-color:var(--gb);background:var(--bg-hov);transform:translateY(-3px)}
+.ski{font-size:1.7rem;display:block;margin-bottom:.65rem}
+.skn{font-size:.85rem;font-weight:400;color:var(--text)}
+
+/* TIMELINE */
+.tl{display:flex;flex-direction:column}
+.ti{display:flex;gap:1.4rem;padding-bottom:1.8rem}
+.tll{display:flex;flex-direction:column;align-items:center;min-width:36px}
+.tld{width:13px;height:13px;border-radius:50%;border:2px solid var(--gold);background:var(--bg);flex-shrink:0}
+.tlv{width:2px;flex:1;background:var(--bdr);margin-top:4px}
+.ti:last-child .tlv{display:none}
+.tc{background:var(--bg-card);border:1px solid var(--bdr);border-radius:8px;padding:1.2rem 1.4rem;flex:1;transition:border-color .25s}
+.tc:hover{border-color:var(--gb)}
+.th{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:.75rem;gap:.8rem}
+.tr{font-family:'Cormorant Garamond',serif;font-size:1.15rem;font-weight:600;color:var(--white)}
+.tco{font-size:.82rem;color:var(--gold);margin-top:.12rem}
+.tdt{font-size:.7rem;color:var(--muted);background:var(--bg-hov);border:1px solid var(--bdr);padding:.22rem .65rem;border-radius:50px;white-space:nowrap}
+.tsk{list-style:none;display:flex;flex-direction:column;gap:.3rem}
+.tsk li{font-size:.83rem;font-weight:300;color:var(--text);padding-left:.9rem;position:relative}
+.tsk li::before{content:'—';position:absolute;left:0;color:var(--gold)}
+
+/* FORMATION */
+.fw{display:flex;align-items:center;justify-content:center;min-height:55vh}
+.fc{background:var(--bg-card);border:1px solid var(--gb);border-left:4px solid var(--gold);border-radius:8px;padding:2.8rem 3.2rem;max-width:580px;width:100%}
+.fy{font-size:.7rem;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:.9rem}
+.fd{font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:600;color:var(--white);margin-bottom:.45rem;line-height:1.15}
+.fsc{font-size:1rem;color:var(--gold);margin-bottom:.4rem}
+.flo{font-size:.88rem;color:var(--muted)}
+
+/* PROJET PRO */
+.pc{max-width:720px}
+.pc p{font-size:.95rem;font-weight:300;line-height:1.85;margin-bottom:1.2rem}
+.pq{border-left:3px solid var(--gold);padding:.9rem 1.4rem;background:var(--gd);border-radius:0 6px 6px 0;margin:1.8rem 0;font-family:'Cormorant Garamond',serif;font-size:1.25rem;font-style:italic;color:var(--white);line-height:1.5}
+.ptags{display:flex;flex-wrap:wrap;gap:.55rem;margin-top:1.8rem}
+.tag{padding:.3rem .85rem;border:1px solid var(--gb);border-radius:50px;font-size:.76rem;color:var(--gold);background:var(--gd)}
+
+/* INTERESTS */
+.ig{display:grid;grid-template-columns:repeat(3,1fr);gap:1.1rem}
+.ic{background:var(--bg-card);border:1px solid var(--bdr);border-radius:8px;padding:1.7rem 1rem;text-align:center;transition:all .25s;cursor:default}
+.ic:hover{border-color:var(--gb);background:var(--bg-hov);transform:translateY(-3px)}
+.ici{font-size:2rem;display:block;margin-bottom:.65rem}
+.icn{font-size:.88rem;font-weight:500;color:var(--white)}
+.ics{font-size:.72rem;color:var(--muted);margin-top:.28rem}
+
+/* CONTACT */
+.ci{max-width:580px;font-size:.95rem;font-weight:300;line-height:1.75;margin-bottom:2.2rem}
+.ci strong{color:var(--gold);font-weight:500}
+.cg{display:grid;grid-template-columns:repeat(2,1fr);gap:1.1rem;max-width:660px}
+.cc{background:var(--bg-card);border:1px solid var(--bdr);border-radius:8px;padding:1.4rem;text-decoration:none;display:block;transition:all .25s}
+.cc:hover{border-color:var(--gb);background:var(--bg-hov);transform:translateY(-2px)}
+.cci{font-size:1.4rem;display:block;margin-bottom:.6rem}
+.ccl{font-size:.65rem;text-transform:uppercase;letter-spacing:2px;color:var(--muted);margin-bottom:.35rem;display:block}
+.ccv{font-size:.88rem;color:var(--white);font-weight:400}
+
+/* HAMBURGER */
+.ham{display:none;position:fixed;top:.9rem;right:.9rem;z-index:200;flex-direction:column;gap:5px;cursor:pointer;background:var(--bg-card);border:1px solid var(--bdr);padding:.55rem;border-radius:6px}
+.ham span{display:block;width:20px;height:2px;background:var(--gold);border-radius:1px;transition:all .3s}
+.ham.o span:nth-child(1){transform:rotate(45deg) translate(5px,5px)}
+.ham.o span:nth-child(2){opacity:0}
+.ham.o span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px)}
+
+/* RESPONSIVE */
+@media(max-width:860px){
+  .sb{transform:translateX(-100%)}
+  .sb.o{transform:translateX(0)}
+  .ct{margin-left:0;width:100%}
+  .ham{display:flex}
+  .pg{padding:2rem 1.4rem;padding-top:4rem}
+  #home.on{padding:2rem 1.4rem;padding-top:4.5rem;height:auto;min-height:100vh}
+  .hmain{flex-direction:column;gap:1.5rem}
+  .hright{flex-direction:row}
+  .sc{flex:1;text-align:center}
+  .ag{grid-template-columns:1fr}
+  .sg{grid-template-columns:repeat(2,1fr)}
+  .ig{grid-template-columns:repeat(2,1fr)}
+  .cg{grid-template-columns:1fr}
+  .hname{font-size:2.8rem}
+}
+@media(max-width:480px){
+  .hright{flex-direction:column}
+  .sg{grid-template-columns:1fr 1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<aside class="sb" id="sb">
+  <div class="sb-top">
+    <div class="sb-av">AH</div>
+    <div class="sb-name">Adam Hajchaib</div>
+    <div class="sb-sub">Électromécanique · Bruxelles</div>
+  </div>
+  <nav class="sb-nav">
+    <button class="nb on" data-page="home"><span class="ni">🏠</span> Accueil</button>
+    <button class="nb" data-page="about"><span class="ni">👤</span> À Propos</button>
+    <button class="nb" data-page="skills"><span class="ni">⚡</span> Compétences</button>
+    <button class="nb" data-page="xp"><span class="ni">💼</span> Expérience</button>
+    <button class="nb" data-page="edu"><span class="ni">🎓</span> Formation</button>
+    <button class="nb" data-page="proj"><span class="ni">🚀</span> Projet Professionnel</button>
+    <button class="nb" data-page="int"><span class="ni">🎯</span> Centres d'Intérêt</button>
+    <button class="nb" data-page="contact"><span class="ni">✉️</span> Contact</button>
+  </nav>
+  <div class="sb-bot">
+    <a href="cv_adam.pdf" download class="cv-btn">⬇ Télécharger mon CV</a>
+  </div>
+</aside>
+
+<!-- HAMBURGER -->
+<button class="ham" id="ham"><span></span><span></span><span></span></button>
+
+<!-- CONTENT -->
+<main class="ct" id="ct">
+
+<!-- ACCUEIL -->
+<div class="pg on" id="home">
+  <div class="hcenter">
+    <div class="hmain">
+      <div class="hleft">
+        <div class="badge">🇧🇪 Bruxelles · Belgique</div>
+        <h1 class="hname">Adam<br><span>Hajchaib</span></h1>
+        <p class="htitle">Étudiant en Électromécanique</p>
+        <p class="htxt">Passionné par les systèmes mécaniques et électriques, je construis mes bases à l'Ephec Galileo tout en accumulant des expériences variées sur le terrain. Disponible pour un contrat d'apprentissage.</p>
+        <div class="hbtns">
+          <button class="bs" id="btn-contact">Me contacter →</button>
+          <a href="cv_adam.pdf" download class="bo">⬇ Mon CV</a>
+        </div>
+      </div>
+      <div class="hright">
+        <div class="sc"><div class="sn">5</div><div class="sl">Expériences</div></div>
+        <div class="sc"><div class="sn">5</div><div class="sl">Langues</div></div>
+        <div class="sc"><div class="sn">18</div><div class="sl">Ans</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="hband">
+    <span>📍 Bruxelles Laeken</span>
+    <span>🎓 Ephec Galileo</span>
+    <span>🚗 Véhiculé</span>
+    <span>🗓 21/05/2007</span>
+    <span>🇧🇪 Belge</span>
+  </div>
+</div>
+
+<!-- À PROPOS -->
+<div class="pg" id="about">
+  <h2 class="pt">À Propos</h2><div class="pd"></div>
+  <div class="ag">
+    <div>
+      <div class="card">
+        <div class="ir"><span class="ii">📅</span><div><span class="il">Né le</span><span class="iv">21 mai 2007</span></div></div>
+        <div class="ir"><span class="ii">📍</span><div><span class="il">Adresse</span><span class="iv">Bruxelles Laeken 1020</span></div></div>
+        <div class="ir"><span class="ii">🇧🇪</span><div><span class="il">Nationalité</span><span class="iv">Belge</span></div></div>
+        <div class="ir"><span class="ii">🚗</span><div><span class="il">Mobilité</span><span class="iv">Véhiculé — Permis B</span></div></div>
+        <div class="ir"><span class="ii">💍</span><div><span class="il">Situation</span><span class="iv">Célibataire</span></div></div>
+      </div>
+      <p class="ltit">Langues parlées</p>
+      <div class="li"><div class="lt"><span class="ln">Français</span><span class="lp">Natif · 100%</span></div><div class="lb"><div class="lf" data-w="100"></div></div></div>
+      <div class="li"><div class="lt"><span class="ln">Arabe</span><span class="lp">Courant · 85%</span></div><div class="lb"><div class="lf" data-w="85"></div></div></div>
+      <div class="li"><div class="lt"><span class="ln">Néerlandais</span><span class="lp">B1 · 55%</span></div><div class="lb"><div class="lf" data-w="55"></div></div></div>
+      <div class="li"><div class="lt"><span class="ln">Espagnol</span><span class="lp">B1 · 50%</span></div><div class="lb"><div class="lf" data-w="50"></div></div></div>
+      <div class="li"><div class="lt"><span class="ln">Anglais</span><span class="lp">A2 · 28%</span></div><div class="lb"><div class="lf" data-w="28"></div></div></div>
+    </div>
+    <div class="atc">
+      <p>Né le 21 mai 2007 à Bruxelles, je suis actuellement étudiant en bachelier électromécanique à l'Ephec Galileo. Jeune, dynamique et curieux, je combine rigueur académique et expérience pratique pour construire un parcours professionnel solide.</p>
+      <p>Mes différentes expériences — de la livraison à l'animation en passant par la vente — m'ont appris à m'adapter rapidement à des environnements variés, à travailler en équipe sous pression et à maintenir un niveau de service élevé en toutes circonstances.</p>
+      <p>Aujourd'hui, je recherche activement un contrat d'apprentissage dans le domaine de l'électromécanique afin de mettre ma formation au service d'une entreprise tout en continuant à progresser sur le terrain.</p>
+    </div>
+  </div>
+</div>
+
+<!-- COMPÉTENCES -->
+<div class="pg" id="skills">
+  <h2 class="pt">Compétences</h2><div class="pd"></div>
+  <div class="sg">
+    <div class="skc"><span class="ski">🤝</span><span class="skn">Empathie client</span></div>
+    <div class="skc"><span class="ski">👂</span><span class="skn">Écoute active</span></div>
+    <div class="skc"><span class="ski">⏱️</span><span class="skn">Gestion du temps</span></div>
+    <div class="skc"><span class="ski">💪</span><span class="skn">Autonomie professionnelle</span></div>
+    <div class="skc"><span class="ski">👥</span><span class="skn">Cohésion d'équipe</span></div>
+    <div class="skc"><span class="ski">📱</span><span class="skn">GPS &amp; Apps mobiles</span></div>
+    <div class="skc"><span class="ski">🕐</span><span class="skn">Souplesse horaires</span></div>
+    <div class="skc"><span class="ski">🧘</span><span class="skn">Patience</span></div>
+    <div class="skc"><span class="ski">🔒</span><span class="skn">Respect &amp; Confidentialité</span></div>
+  </div>
+</div>
+
+<!-- EXPÉRIENCE -->
+<div class="pg" id="xp">
+  <h2 class="pt">Expérience</h2><div class="pd"></div>
+  <div class="tl">
+    <div class="ti">
+      <div class="tll"><div class="tld"></div><div class="tlv"></div></div>
+      <div class="tc">
+        <div class="th"><div><div class="tr">🛵 Livreur</div><div class="tco">Les Cyclades</div></div><span class="tdt">02/2026 — Actuel</span></div>
+        <ul class="tsk"><li>Livraison de commandes à domicile dans les délais impartis</li><li>Navigation GPS et optimisation des itinéraires</li><li>Respect des consignes de sécurité routière et de présentation</li></ul>
+      </div>
+    </div>
+    <div class="ti">
+      <div class="tll"><div class="tld"></div><div class="tlv"></div></div>
+      <div class="tc">
+        <div class="th"><div><div class="tr">🍽️ Serveur</div><div class="tco">Les Cyclades</div></div><span class="tdt">04/2026 — 05/2026</span></div>
+        <ul class="tsk"><li>Service en salle et accueil chaleureux des clients</li><li>Prise de commandes, gestion simultanée de plusieurs tables</li><li>Travail en équipe dans un environnement dynamique</li></ul>
+      </div>
+    </div>
+    <div class="ti">
+      <div class="tll"><div class="tld"></div><div class="tlv"></div></div>
+      <div class="tc">
+        <div class="th"><div><div class="tr">⚽ Animateur</div><div class="tco">Plaines Bruxelles</div></div><span class="tdt">07/2024 — 08/2024</span></div>
+        <ul class="tsk"><li>Animation d'activités sportives et créatives pour enfants</li><li>Gestion de groupes et application des règles de sécurité</li><li>Développement de la cohésion et de la bonne humeur collective</li></ul>
+      </div>
+    </div>
+    <div class="ti">
+      <div class="tll"><div class="tld"></div><div class="tlv"></div></div>
+      <div class="tc">
+        <div class="th"><div><div class="tr">🍫 Vendeur</div><div class="tco">Leonidas</div></div><span class="tdt">08/2023 — 09/2023</span></div>
+        <ul class="tsk"><li>Accueil, conseil et fidélisation de la clientèle en boutique</li><li>Présentation et mise en valeur des produits de chocolaterie</li><li>Gestion de la caisse et tenue du point de vente</li></ul>
+      </div>
+    </div>
+    <div class="ti">
+      <div class="tll"><div class="tld"></div><div class="tlv"></div></div>
+      <div class="tc">
+        <div class="th"><div><div class="tr">🧹 Nettoyeur</div><div class="tco">Kose Cleaning</div></div><span class="tdt">07/2022 — 09/2022</span></div>
+        <ul class="tsk"><li>Nettoyage et entretien de locaux professionnels et résidentiels</li><li>Respect strict des protocoles d'hygiène et de sécurité</li><li>Travail autonome, ponctualité et rigueur dans l'exécution</li></ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FORMATION -->
+<div class="pg" id="edu">
+  <h2 class="pt">Formation</h2><div class="pd"></div>
+  <div class="fw">
+    <div class="fc">
+      <div class="fy">Depuis janvier 2026 — En cours</div>
+      <div class="fd">Bachelier en<br>Électromécanique</div>
+      <div class="fsc">Ephec Galileo</div>
+      <div class="flo">📍 Bruxelles Schaerbeek, Belgique</div>
+    </div>
+  </div>
+</div>
+
+<!-- PROJET PROFESSIONNEL -->
+<div class="pg" id="proj">
+  <h2 class="pt">Projet Professionnel</h2><div class="pd"></div>
+  <div class="pc">
+    <p>L'électromécanique est bien plus qu'une filière technique — c'est un domaine à la croisée de deux disciplines fondamentales de l'industrie moderne. Dès mon entrée à l'Ephec Galileo, j'ai su que c'était la voie qui combinait ma fascination pour les systèmes mécaniques et mon attrait pour l'électronique et l'automatisation.</p>
+    <div class="pq">« Je veux devenir technicien de terrain capable de comprendre, d'entretenir et d'améliorer des installations industrielles complexes — pas seulement les subir. »</div>
+    <p>Mon objectif à court terme est d'obtenir un <strong style="color:var(--white)">contrat d'apprentissage</strong> qui me permettra de valider ma formation en immersion réelle dans une entreprise. Cette alternance théorie/pratique est, selon moi, la meilleure façon d'apprendre un métier avec exigence.</p>
+    <p>À moyen terme, je souhaite évoluer vers un poste d'ingénieur ou de responsable maintenance, en me spécialisant dans l'automatisation industrielle ou les énergies renouvelables — deux secteurs porteurs qui auront besoin de profils solides dans les décennies à venir.</p>
+    <div class="ptags">
+      <span class="tag">Contrat d'apprentissage</span>
+      <span class="tag">Électromécanique</span>
+      <span class="tag">Terrain &amp; pratique</span>
+      <span class="tag">Évolution professionnelle</span>
+    </div>
+  </div>
+</div>
+
+<!-- CENTRES D'INTÉRÊT -->
+<div class="pg" id="int">
+  <h2 class="pt">Centres d'Intérêt</h2><div class="pd"></div>
+  <div class="ig">
+    <div class="ic"><span class="ici">⚽</span><span class="icn">Football</span><p class="ics">Club depuis 4 ans</p></div>
+    <div class="ic"><span class="ici">🎵</span><span class="icn">Musique</span></div>
+    <div class="ic"><span class="ici">🏓</span><span class="icn">Padel</span></div>
+    <div class="ic"><span class="ici">📚</span><span class="icn">Lecture</span></div>
+    <div class="ic"><span class="ici">🍳</span><span class="icn">Cuisine</span></div>
+    <div class="ic"><span class="ici">🎬</span><span class="icn">Cinéma</span></div>
+  </div>
+</div>
+
+<!-- CONTACT -->
+<div class="pg" id="contact">
+  <h2 class="pt">Contact</h2><div class="pd"></div>
+  <p class="ci">Disponible pour un <strong>contrat d'apprentissage</strong> en électromécanique dès maintenant. N'hésitez pas à me contacter — je répondrai dans les plus brefs délais.</p>
+  <div class="cg">
+    <a href="mailto:hajchaib123@icloud.com" class="cc"><span class="cci">✉️</span><span class="ccl">E-mail</span><span class="ccv">hajchaib123@icloud.com</span></a>
+    <a href="tel:+32485239742" class="cc"><span class="cci">📞</span><span class="ccl">Téléphone</span><span class="ccv">0485 23 97 42</span></a>
+    <div class="cc"><span class="cci">📍</span><span class="ccl">Adresse</span><span class="ccv">Bruxelles Laeken 1020</span></div>
+    <a href="cv_adam.pdf" download class="cc"><span class="cci">📄</span><span class="ccl">Curriculum Vitae</span><span class="ccv">Télécharger mon CV (PDF)</span></a>
+  </div>
+</div>
+
+</main>
+<script>
+function showPage(id) {
+  document.querySelectorAll('.pg').forEach(p => p.classList.remove('on'));
+  document.getElementById(id).classList.add('on');
+  document.querySelectorAll('.nb').forEach(b => b.classList.remove('on'));
+  document.querySelector('[data-page="' + id + '"]').classList.add('on');
+  document.getElementById('ct').scrollTo(0, 0);
+  document.getElementById('sb').classList.remove('o');
+  document.getElementById('ham').classList.remove('o');
+  if (id === 'about') {
+    document.querySelectorAll('.lf').forEach(b => { b.style.width = '0'; });
+    setTimeout(() => {
+      document.querySelectorAll('.lf').forEach(b => { b.style.width = b.dataset.w + '%'; });
+    }, 280);
+  }
+}
+document.querySelectorAll('.nb').forEach(btn => {
+  btn.addEventListener('click', () => showPage(btn.dataset.page));
+});
+document.getElementById('btn-contact').addEventListener('click', () => showPage('contact'));
+document.getElementById('ham').addEventListener('click', () => {
+  document.getElementById('sb').classList.toggle('o');
+  document.getElementById('ham').classList.toggle('o');
+});
+</script>
+</body>
+</html>
